@@ -50,7 +50,7 @@ func (m *geoManager) GetState(id int64) (*models.MGeoState, error) {
 	return m.states[id], nil
 }
 
-func (m *geoManager) ListLocations(limit int64, offset int64, orderBy string) ([]*models.MLocation, error) {
+func (m *geoManager) ListLocations(limit int, offset int, orderBy string) ([]*models.MLocation, error) {
 	var locations []*models.MLocation
 	if limit == 0 {
 		limit = 100
@@ -75,7 +75,7 @@ func (m *geoManager) ListLocations(limit int64, offset int64, orderBy string) ([
 	return locations, nil
 }
 
-func (m *geoManager) ListLocationsByState(stateID int64, limit int64, offset int64, orderBy string) ([]*models.MLocation, error) {
+func (m *geoManager) ListLocationsByState(stateID int64, limit int, offset int, orderBy string) ([]*models.MLocation, error) {
 	var locations []*models.MLocation
 	if limit == 0 {
 		limit = 100
@@ -100,7 +100,7 @@ func (m *geoManager) ListLocationsByState(stateID int64, limit int64, offset int
 	return locations, nil
 }
 
-func (m *geoManager) QueryLocations(query string, limit int64, offset int64, orderBy string) ([]*models.MLocation, error) {
+func (m *geoManager) QueryLocations(query string, limit int, offset int, orderBy string) ([]*models.MLocation, error) {
 	var locations []*models.MLocation
 	if limit == 0 {
 		limit = 100
@@ -146,7 +146,7 @@ func (m *geoManager) ListMilateryBases() ([]*models.MMilateryBase, error) {
 	return m.milateryBasesList, nil
 }
 
-func (m *geoManager) QueryMilateryBases(query string, limit int64, offset int64, orderBy string) ([]*models.MMilateryBase, error) {
+func (m *geoManager) QueryMilateryBases(query string, limit int, offset int, orderBy string) ([]*models.MMilateryBase, error) {
 	var milateryBases []*models.MMilateryBase
 	err := m.db.Transaction(func(tx *gorm.DB) error {
 		if limit == 0 {

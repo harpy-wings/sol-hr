@@ -38,7 +38,7 @@ type MUser struct {
 	// Last update timestamp
 	UpdatedAt time.Time `json:"updated_at" gorm:"not null" example:"2021-01-01T00:00:00Z"`
 	// UID of user who created this user
-	CreatedBy string `json:"created_by" gorm:"type:varchar(255);not null" example:"system"`
+	CreatedBy int64 `json:"created_by" gorm:"type:int;not null" example:"1"`
 }
 
 func (*MUser) TableName() string {
@@ -96,7 +96,7 @@ func (m *MUser) Seed() error {
 		IsSA:      true,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
-		CreatedBy: "system",
+		CreatedBy: 0,
 	}).Error
 	if err != nil {
 		return err

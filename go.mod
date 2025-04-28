@@ -31,6 +31,7 @@ require (
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mailgun/raymond/v2 v2.0.48 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/mavihq/persian v0.0.0-20231020110200-3e779b10be51 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.26 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect

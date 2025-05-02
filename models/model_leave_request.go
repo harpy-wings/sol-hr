@@ -16,10 +16,10 @@ type MLeaveRequest struct {
 	Status    int       `json:"status" gorm:"not null;default:0" example:"0"`
 
 	AcceptedById int64  `json:"accepted_by_id" gorm:"not null" example:"1"`
-	AcceptedBy   *MUser `json:"accepted_by" gorm:"foreignKey:AcceptedById"`
+	AcceptedBy   *MUser `json:"accepted_by" gorm:"-"`
 
 	RequestedById int64  `json:"requested_by_id" gorm:"not null" example:"1"`
-	RequestedBy   *MUser `json:"requested_by" gorm:"foreignKey:RequestedById"`
+	RequestedBy   *MUser `json:"requested_by" gorm:"-"`
 
 	Reason string `json:"reason" gorm:"" example:"شخصی"`
 	Kind   int    `json:"kind" gorm:"not null;default:0" example:"0"`

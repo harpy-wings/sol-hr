@@ -85,7 +85,7 @@ func (c *controller) Post(ctx iris.Context) (*controllers.GenericResponse, error
 	if err != nil {
 		return nil, err
 	}
-	user.CreatedBy = currentUser.ID
+	user.CreatedById = currentUser.ID
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
 
@@ -163,4 +163,57 @@ func (c *controller) DeleteBy(ctx iris.Context, id int64) (*controllers.GenericR
 		return nil, err
 	}
 	return &controllers.GenericResponse{Data: "User deleted successfully"}, nil
+}
+
+func (c *controller) PostLogin(ctx iris.Context) (*controllers.GenericResponse, error) {
+	var req struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	err := ctx.ReadJSON(&req)
+	if err != nil {
+		return nil, err
+	}
+	User, token, err := c.userService.Login(ctx, req.Username, req.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	response := struct {
+		User  *models.MUser `json:"user"`
+		Token string        `json:"token"`
+	}{
+		User:  User,
+		Token: token,
+	}
+
+	return &controllers.GenericResponse{Success: true, Data: response}, nil
+}
+
+func (c *controller) PostLogout(ctx iris.Context) (*controllers.GenericResponse, error) {
+	token := ctx.GetHeader("Authorization")
+	if token == "" {
+		return nil, errors.New("token is required")
+	}
+	err := c.userService.Logout(token)
+	if err != nil {
+		return nil, err
+	}
+	return &controllers.GenericResponse{Success: true, Data: "Logout successfully"}, nil
+}
+
+func (c *controller) GetMe(ctx iris.Context) (*controllers.GenericResponse, error) {
+	token := ctx.GetHeader("Authorization")
+	if token == "" {
+		return nil, errors.New("token is required")
+	}
+	user, err := c.userService.Acl(token, "", 0)
+	if err != nil {
+		return nil, err
+	}
+	user, err = c.userService.GetUser(user.ID)
+	if err != nil {
+		return nil, err
+	}
+	return &controllers.GenericResponse{Success: true, Data: user}, nil
 }

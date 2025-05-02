@@ -1,0 +1,6 @@
+port: 3000
+db:
+  client: "sqlite"
+  raw: "database.db"
+
+

@@ -24,12 +24,28 @@ type userManager struct {
 var _ IUserManager = &userManager{}
 
 func (u *userManager) setDefaults() {
+	u.cache = cache.New(time.Hour*12, time.Hour*12)
 	if models.DB != nil {
 		u.db = models.DB
+	}
+	if utilitymanager.Default != nil {
+		u.um = utilitymanager.Default
 	}
 }
 
 func (u *userManager) init() error {
+	if u.db == nil {
+		return errors.New("database is not initialized")
+	}
+	if u.um == nil {
+		return errors.New("utility manager is not initialized")
+	}
+	if u.cache == nil {
+		u.cache = cache.New(time.Hour*12, time.Hour*12)
+	}
+	if u.acls == nil {
+		u.acls = make(map[string]*models.MAcl)
+	}
 	return nil
 }
 

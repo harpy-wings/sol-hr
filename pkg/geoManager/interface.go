@@ -13,13 +13,7 @@ type GeoManager interface {
 	UpdateLocation(location *models.MLocation) error
 	DeleteLocation(id int64) error
 
-	ListMilateryBases() ([]*models.MMilateryBase, error)
-	QueryMilateryBases(query string, limit int, offset int, orderBy string) ([]*models.MMilateryBase, error)
-	GetMilateryBase(id int64) (*models.MMilateryBase, error)
-	GetMilateryBaseByLocation(locationID int64) (*models.MMilateryBase, error)
-	CreateMilateryBase(milateryBase *models.MMilateryBase) error
-	UpdateMilateryBase(milateryBase *models.MMilateryBase) error
-	DeleteMilateryBase(id int64) error
+	GetLocation(id int64) (*models.MLocation, error)
 }
 
 var Default GeoManager

@@ -38,7 +38,7 @@ func (c *controller) GetStates(ctx iris.Context) (*controllers.GenericResponse, 
 // @Success 200 {object} controllers.GenericResponse{data=models.MLocation} "Location updated successfully"
 // @Failure 400 {object} controllers.GenericResponse "Invalid request body"
 // @Router /api/locations [put]
-func (c *controller) PutLocation(ctx iris.Context) (*controllers.GenericResponse, error) {
+func (c *controller) Put(ctx iris.Context) (*controllers.GenericResponse, error) {
 	location := &models.MLocation{}
 	err := ctx.ReadJSON(&location)
 	if err != nil {
@@ -61,7 +61,7 @@ func (c *controller) PutLocation(ctx iris.Context) (*controllers.GenericResponse
 // @Success 200 {object} controllers.GenericResponse{data=models.MLocation} "Location updated successfully"
 // @Failure 400 {object} controllers.GenericResponse "Invalid request body"
 // @Router /api/locations [post]
-func (c *controller) PostLocation(ctx iris.Context) (*controllers.GenericResponse, error) {
+func (c *controller) Post(ctx iris.Context) (*controllers.GenericResponse, error) {
 	location := &models.MLocation{}
 	err := ctx.ReadJSON(&location)
 	if err != nil {
@@ -120,6 +120,15 @@ func (c *controller) Get(ctx iris.Context) (*controllers.GenericResponse, error)
 	return &controllers.GenericResponse{Success: true, Data: locations}, nil
 }
 
+func (c *controller) DeleteBy(ctx iris.Context, id int64) (*controllers.GenericResponse, error) {
+	err := c.geoService.DeleteLocation(id)
+	if err != nil {
+		return nil, err
+	}
+	return &controllers.GenericResponse{Success: true}, nil
+}
+
+/*
 func (c *controller) GetMilateryBase(ctx iris.Context) (*controllers.GenericResponse, error) {
 	request := GenericListRequest{}
 	err := ctx.ReadQuery(&request)
@@ -129,9 +138,9 @@ func (c *controller) GetMilateryBase(ctx iris.Context) (*controllers.GenericResp
 	if request.Limit == 0 {
 		request.Limit = 10
 	}
-	var units []*models.MMilateryBase
+	var units []*models.MBranch
 	if request.Query != "" {
-		units, err = c.geoService.QueryMilateryBases(request.Query, request.Limit, request.Offset, "")
+		units, err = c.branchService.QueryBranches(request.Query, request.Limit, request.Offset, "")
 	} else {
 		units, err = c.geoService.ListMilateryBases()
 	}
@@ -190,6 +199,7 @@ func (c *controller) DeleteMilateryBaseBy(ctx iris.Context, id int64) (*controll
 	}
 	return &controllers.GenericResponse{Success: true}, nil
 }
+*/
 
 func (c *controller) Options(ctx iris.Context) {
 	ctx.StatusCode(200)

@@ -22,6 +22,17 @@ func (m *utilityManager) setDefaults() {
 }
 
 func (m *utilityManager) init() error {
+	if m.db == nil {
+		return errors.New("database is not initialized")
+	}
+
+	if m.militaryRanks == nil {
+		m.militaryRanks = make(map[int64]*models.MMilitaryRank)
+	}
+	err := m.loadMilitaryRanks()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -38,4 +49,21 @@ func (m *utilityManager) GetMilitaryRank(id int64) (*models.MMilitaryRank, error
 		return nil, errors.New("military rank not found")
 	}
 	return rank, nil
+}
+func (m *utilityManager) loadMilitaryRanks() error {
+	m.militaryRanksList = make([]*models.MMilitaryRank, 0)
+	m.militaryRanks = make(map[int64]*models.MMilitaryRank)
+
+	var ranks []*models.MMilitaryRank
+	err := m.db.Find(&ranks).Error
+	if err != nil {
+		return err
+	}
+
+	for _, rank := range ranks {
+		m.militaryRanksList = append(m.militaryRanksList, rank)
+		m.militaryRanks[rank.ID] = rank
+	}
+
+	return nil
 }

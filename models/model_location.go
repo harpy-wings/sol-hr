@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"strconv"
+	"time"
 )
 
 // MLocation represents a location in the system
@@ -24,7 +25,9 @@ type MLocation struct {
 	Lng float64 `json:"lng" gorm:"type:float;not null" example:"51.3890"`
 
 	// Distance from the reference location (used for calculations)
-	DistanceKm float64 `json:"distance_km" gorm:"type:float;" example:"100"`
+	DistanceKm float64   `json:"distance_km" gorm:"type:float;" example:"100"`
+	CreatedAt  time.Time `json:"created_at" gorm:"type:datetime;not null" example:"2021-01-01 00:00:00"`
+	UpdatedAt  time.Time `json:"updated_at" gorm:"type:datetime;not null" example:"2021-01-01 00:00:00"`
 }
 
 func (*MLocation) TableName() string {

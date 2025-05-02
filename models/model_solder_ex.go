@@ -15,7 +15,7 @@ type MExSolder struct {
 	ChildrenCount int64      `json:"children_count" gorm:"not null;default:0" example:"0"`
 
 	ReligionID            int64          `json:"religion_id" gorm:"not null" example:"1"`
-	Religion              *MReligon      `json:"religion" gorm:"foreignKey:ReligionID"`
+	Religion              *MReligon      `json:"religion" gorm:"-"`
 	BirthDate             *time.Time     `json:"birth_date" gorm:"" example:"2021-01-01"`
 	BirthPlace            string         `json:"birth_place" gorm:"" example:"تهران"`
 	BirthIssuedPlace      string         `json:"birth_issued_place" gorm:"" example:"تهران"`
@@ -29,14 +29,14 @@ type MExSolder struct {
 	DriverLicenseIssuedAt *time.Time     `json:"driver_license_issued_at" gorm:"" example:"2021-01-01"`
 
 	EyeColorID  int64   `json:"eye_color_id" gorm:"not null" example:"1"`
-	EyeColor    *MColor `json:"eye_color" gorm:"foreignKey:EyeColorID"`
+	EyeColor    *MColor `json:"eye_color" gorm:"-"`
 	HairColorID int64   `json:"hair_color_id" gorm:"not null" example:"1"`
-	HairColor   *MColor `json:"hair_color" gorm:"foreignKey:HairColorID"`
+	HairColor   *MColor `json:"hair_color" gorm:"-"`
 
 	EducationField      string           `json:"education_field" gorm:"" example:"مهندسی کامپیوتر"`
 	EducationUniversity string           `json:"education_university" gorm:"" example:"تهران"`
 	EducationLevelID    int64            `json:"education_level_id" gorm:"not null" example:"1"`
-	EducationLevel      *MEducationLevel `json:"education_level" gorm:"foreignKey:EducationLevelID"`
+	EducationLevel      *MEducationLevel `json:"education_level" gorm:"-"`
 }
 
 func (m *MExSolder) TableName() string {

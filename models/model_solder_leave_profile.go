@@ -5,7 +5,7 @@ import "errors"
 type MSolderLeaveProfile struct {
 	ID        int64    `json:"id" gorm:"primaryKey;autoIncrement:true" example:"1"`
 	SolderUid string   `json:"solder_uid" gorm:"type:varchar(11);not null" example:"1234567890"`
-	Solder    *MSolder `json:"solder" gorm:"foreignKey:SolderUid"`
+	Solder    *MSolder `json:"solder" gorm:"-"`
 
 	TotalAnnualLeave int64 `json:"total_annual_leave" gorm:"not null" example:"10"`
 	UsedAnnualLeave  int64 `json:"used_annual_leave" gorm:"not null" example:"10"`

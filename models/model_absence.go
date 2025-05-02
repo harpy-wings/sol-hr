@@ -10,14 +10,14 @@ import (
 type MAbsence struct {
 	gorm.Model
 	SolderUid   string    `json:"solder_uid" gorm:"type:varchar(11);not null" example:"1234567890"`
-	Solder      *MSolder  `json:"solder" gorm:"foreignKey:SolderUid"`
+	Solder      *MSolder  `json:"solder" gorm:"-"`
 	Date        time.Time `json:"date" gorm:"type:date;not null" example:"2021-01-01"`
 	CreatedByID int64     `json:"created_by_id" gorm:"not null" example:"1"`
-	CreatedBy   *MUser    `json:"created_by" gorm:"foreignKey:CreatedByID"`
+	CreatedBy   *MUser    `json:"created_by" gorm:"-"`
 
 	IsProcessed  bool         `json:"is_processed" gorm:"not null" example:"false"`
 	AdjustmentID *int64       `json:"adjustment_id" gorm:"" example:"1"`
-	Adjustment   *MAdjustment `json:"adjustment" gorm:"foreignKey:AdjustmentID"`
+	Adjustment   *MAdjustment `json:"adjustment" gorm:"-"`
 }
 
 func (m *MAbsence) TableName() string {

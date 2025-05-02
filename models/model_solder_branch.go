@@ -10,10 +10,10 @@ import (
 type MSolderBranch struct {
 	gorm.Model
 	SolderUid string   `json:"solder_uid" gorm:"not null" example:"1dec3bcb-7b1a-4b90-b261-6763da09e06b"`
-	Solder    *MSolder `json:"solder" gorm:"foreignKey:SolderUid"`
+	Solder    *MSolder `json:"solder" gorm:"-"`
 
 	BranchID int64    `json:"branch_id" gorm:"not null" example:"1"`
-	Branch   *MBranch `json:"branch" gorm:"foreignKey:BranchID"`
+	Branch   *MBranch `json:"branch" gorm:"-"`
 
 	StartDate time.Time  `json:"start_date" gorm:"not null" example:"2021-01-01"`
 	DueDate   *time.Time `json:"due_date" gorm:"" example:"2021-01-01"`

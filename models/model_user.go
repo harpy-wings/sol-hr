@@ -38,7 +38,9 @@ type MUser struct {
 	// Last update timestamp
 	UpdatedAt time.Time `json:"updated_at" gorm:"not null" example:"2021-01-01T00:00:00Z"`
 	// UID of user who created this user
-	CreatedBy int64 `json:"created_by" gorm:"type:int;not null" example:"1"`
+	CreatedById int64 `json:"created_by_id" gorm:"type:int;not null" example:"1"`
+	// Branch IDs
+	BranchIDs []int64 `json:"branch_ids" gorm:"-"`
 }
 
 func (*MUser) TableName() string {
@@ -87,16 +89,16 @@ func (m *MUser) Seed() error {
 	fmt.Scanln(&password)
 
 	err = DB.Create(&MUser{
-		ID:        0,
-		Username:  username,
-		FirstName: "Super",
-		LastName:  "Admin",
-		Password:  password,
-		Role:      "superadmin",
-		IsSA:      true,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		CreatedBy: 0,
+		ID:          0,
+		Username:    username,
+		FirstName:   "Super",
+		LastName:    "Admin",
+		Password:    password,
+		Role:        "superadmin",
+		IsSA:        true,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
+		CreatedById: 0,
 	}).Error
 	if err != nil {
 		return err
